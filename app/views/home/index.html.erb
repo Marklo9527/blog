@@ -1,0 +1,20 @@
+<h4 class="pt-3">Welcome to My Blog</h4>
+<div class="row pt-2">
+	<div class="col-12">
+		<h6>	Post group by day </h6>
+	</div>	
+	<div class="col-12">
+		<%= line_chart Post.group("date(created_at)").count %>
+	</div>	
+</div>
+
+
+<div class="row pt-2">
+        <div class="col-12">
+		<h6>	Post group by category </h6>
+        </div>
+        <div class="col-12">
+		<%= pie_chart Post.joins(:category).group('categories.name').count %>
+        </div>
+</div>
+

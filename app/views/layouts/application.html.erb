@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Blog</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+
+		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+			<%= link_to 'My Blog', root_path,:class => "navbar-brand" %>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item <%= active_nav('home')%>">
+						<a class="nav-link" href="<%=root_path%>">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<% categories.each do |category|%>
+						<li class="nav-item <%= active_nav("post_#{category.id}")%>">
+							<%=link_to category.name,posts_path(:category_id => category.id),:class => "nav-link"%>
+						</li>
+					<%end%>
+					<% if signed_in? %>
+						<li class="nav-item <%= active_nav('category')%>">
+							<%= link_to 'Setting', categories_path,:class => "nav-link" %>
+						</li>
+					<% end %>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<% if signed_in? %>
+						<%= current_user.email %> &nbsp;
+						<%= link_to "Sign out", sign_out_path, method: :delete,class: "btn btn-light" %>
+					<% else %>
+						<%= link_to "Sign in", sign_in_path,class: "btn btn-light" %>
+					<% end %>
+				</form>
+			</div>
+		</nav>
+
+		<main>
+		<div class="container mt-5">
+			<div class="main">	
+				<%= yield %>
+			</div>
+		</div>
+		</main>
+
+
+	</body>
+</html>

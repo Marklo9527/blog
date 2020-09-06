@@ -1,0 +1,10 @@
+<h4 class="pt-4">
+  <%= @post.title %>
+</h4>
+
+<p class="pt-1">
+  <%=simple_format @post.body %>
+</p>
+
+
+<%= link_to 'Back', posts_path(category_id: @post.category_id),:class => "btn btn-sm btn-outline-info"%>
